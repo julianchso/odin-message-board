@@ -2,4 +2,8 @@ import { Router } from 'express';
 
 const newMsgRouter = Router();
 
-newMsgRouter.get('/new', (req, res) => {});
+newMsgRouter.get('/', (req, res) => {
+  res.render('form');
+});
+
+export { newMsgRouter };
