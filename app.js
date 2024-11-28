@@ -1,21 +1,23 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { messages } from './routes/indexRouter.js';
-import { newMsgRouter } from './routes/newMsgRouter.js';
+import { messages, indexRouter } from './routes/indexRouter.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded());
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use('/new', newMsgRouter);
+app.use('/', indexRouter);
+// app.use('/new', indexRouter);
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Mini Messageboard', messages: messages });

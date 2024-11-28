@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 const indexRouter = Router();
@@ -18,6 +19,17 @@ const messages = [
   },
 ];
 
-indexRouter.post('/new', (req, res) => {});
+indexRouter.get('/new', (req, res) => {
+  res.render('form');
+});
 
-export { messages };
+indexRouter.post('/new', (req, res) => {
+  const { message, user } = req.body;
+
+  console.log(req.body);
+
+  messages.push({ text: message, user: user, added: new Date(), id: uuidv4() });
+  res.redirect('/');
+});
+
+export { messages, indexRouter };
