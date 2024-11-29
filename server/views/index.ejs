@@ -6,6 +6,7 @@
     <title>Message App</title>
   </head>
   <body>
+    <h1>Mini Messaging App</h1>
     <ul>
       <% messages.forEach(message => { %> <%- include('message', {message: message}); %> <% }); %>
     </ul>
