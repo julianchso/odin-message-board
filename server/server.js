@@ -9,7 +9,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST'],
 };
 
 app.use(cors(corsOptions));
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api', (req, res) => {
+  res.header('Access-Control-Allow-Origin', '*');
   res.json({ fruits: ['apple', 'orange', 'banana'] });
 });
 
