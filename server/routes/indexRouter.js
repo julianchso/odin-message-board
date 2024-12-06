@@ -18,17 +18,21 @@ const messages = [
   },
 ];
 
-// indexRouter.get('/new', (req, res) => {
-//   res.render('form');
-// });
+indexRouter.get('/', (req, res) => {
+  res.render('index', { messages: messages });
+});
 
-// indexRouter.post('/new', (req, res) => {
-//   const { message, user } = req.body;
+indexRouter.get('/new', (req, res) => {
+  res.render('form');
+});
 
-//   console.log(req.body);
+indexRouter.post('/new', (req, res) => {
+  const { message, user } = req.body;
 
-//   messages.push({ text: message, user: user, added: new Date(), id: uuidv4() });
-//   res.redirect('/');
-// });
+  console.log(req.body);
+
+  messages.push({ text: message, user: user, added: new Date(), id: uuidv4() });
+  res.redirect('/');
+});
 
 export { messages, indexRouter };

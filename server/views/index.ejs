@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,7 +7,15 @@
   <body>
     <h1>Mini Messaging App</h1>
     <ul>
-      <% messages.forEach(message => { %> <%- include('message', {message: message}); %> <% }); %>
+      <% for(var i=0; i<messages.length; i++) { %>
+        <li>
+            <%= messages[i].user %>
+            <%= messages[i].text %>
+            <%= messages[i].added %>
+            <%= messages[i].id %>
+        </li>
+    <% } %>
     </ul>
   </body>
 </html>
+;

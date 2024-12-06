@@ -4,6 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { messages, indexRouter } from './routes/indexRouter.js';
+import { newMsgRouter } from './routes/newMsgRouter.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,21 +23,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use('/', indexRouter);
+app.use('/new', newMsgRouter);
 
 const assetsPath = path.join(__dirname, 'public');
 app.use(express.static(assetsPath));
 
-app.get('/', (req, res) => {
-  res.render('index', { title: 'Mini Messageboard', messages: messages });
-});
-
-app.get('/api', (req, res) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.json({ fruits: ['apple', 'orange', 'banana'] });
-});
-
 app.get('/new', (req, res) => {
-  res.json({ message: 'Hello from backend!' });
+  res.send('type your message');
 });
 
 app.listen(PORT, () => {
