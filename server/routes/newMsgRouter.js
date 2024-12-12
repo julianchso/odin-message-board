@@ -3,7 +3,7 @@ import { Router } from 'express';
 const newMsgRouter = Router();
 
 newMsgRouter.get('/', (req, res) => {
-  res.render('form');
+  res.send('form');
 });
 
 export { newMsgRouter };

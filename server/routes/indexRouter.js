@@ -18,12 +18,12 @@ const messages = [
   },
 ];
 
-indexRouter.get('/', (req, res) => {
-  res.render('index', { messages: messages });
+indexRouter.get('/messages', (req, res) => {
+  res.json({ messages: messages });
 });
 
 indexRouter.get('/new', (req, res) => {
-  res.render('form');
+  res.send('form');
 });
 
 indexRouter.post('/new', (req, res) => {
