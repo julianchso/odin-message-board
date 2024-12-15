@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+
+import FormComponent from './FormComponent';
+
 import './App.css';
 import axios from 'axios';
 // import { PORT } from '../../.env';
@@ -13,7 +16,6 @@ function App() {
     try {
       const response = await axios.get('http://localhost:3000/messages');
       setMessages(response.data.messages);
-      console.log(response.data.messages);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -27,14 +29,16 @@ function App() {
     <>
       <h1>Mini Messaging App</h1>
       <div className='messagesCtn'>
+        <FormComponent />
+
         <div>
-          {messages === '' ? (
+          {messages.length === 0 ? (
             <p>loading...</p>
           ) : (
             messages.map((message) => (
               <div key={message.id}>
-                <p>{message.user}</p>
-                <p>{message.text}</p>
+                <p>{message.username}</p>
+                <p>{message.message}</p>
                 <p>{message.added}</p>
               </div>
             ))

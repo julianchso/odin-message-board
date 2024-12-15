@@ -5,14 +5,14 @@ const indexRouter = Router();
 
 const messages = [
   {
-    text: 'Hi there!',
-    user: 'Amando',
+    username: 'Amando',
+    message: 'Hi there!',
     added: new Date(),
     id: uuidv4(),
   },
   {
-    text: 'Hello World!',
-    user: 'Charles',
+    username: 'Charles',
+    message: 'Hello World!',
     added: new Date(),
     id: uuidv4(),
   },
@@ -31,7 +31,7 @@ indexRouter.post('/new', (req, res) => {
 
   console.log(req.body);
 
-  messages.push({ text: message, user: user, added: new Date(), id: uuidv4() });
+  messages.push({ username: message, message: user, added: new Date(), id: uuidv4() });
   res.redirect('/');
 });
 
