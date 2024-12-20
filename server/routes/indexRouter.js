@@ -18,20 +18,22 @@ const messages = [
   },
 ];
 
+indexRouter.get('/', (req, res) => {
+  res.json({ messages: messages });
+});
+
 indexRouter.get('/messages', (req, res) => {
   res.json({ messages: messages });
 });
 
-indexRouter.get('/new', (req, res) => {
-  res.send('form');
-});
+indexRouter.post('/messages', (req, res) => {
+  const { message, user, added, id } = req.body;
+  console.log(`request body: ${req.body}`);
 
-indexRouter.post('/new', (req, res) => {
-  const { message, user } = req.body;
+  console.log(`message: ${message}`);
+  console.log(`user: ${user}`);
 
-  console.log(req.body);
-
-  messages.push({ username: message, message: user, added: new Date(), id: uuidv4() });
+  messages.push({ username: user, message: message, added: added, id: id });
   res.redirect('/');
 });
 

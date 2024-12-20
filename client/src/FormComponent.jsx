@@ -14,13 +14,17 @@ const FormComponent = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     console.log(`username: ${formData.username}`);
     console.log(`message: ${formData.message}`);
+    // console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // const response = await axios.post('http://localhost:3000/messages', JSON.stringify(formData));
       const response = await axios.post('http://localhost:3000/messages', formData);
+      // const response = await axios.post('/messages', formData);
+      console.log(formData);
       console.log('Form data submitted successfully:', response.data);
     } catch (error) {
       console.log('Error submitting form data', error);

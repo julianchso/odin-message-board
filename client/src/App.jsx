@@ -16,6 +16,7 @@ function App() {
     try {
       const response = await axios.get('http://localhost:3000/messages');
       setMessages(response.data.messages);
+      console.log(messages);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -30,7 +31,6 @@ function App() {
       <h1>Mini Messaging App</h1>
       <div className='messagesCtn'>
         <FormComponent />
-
         <div>
           {messages.length === 0 ? (
             <p>loading...</p>
