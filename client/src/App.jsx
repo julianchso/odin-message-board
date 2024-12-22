@@ -2,29 +2,55 @@ import { useState, useEffect } from 'react';
 
 import FormComponent from './FormComponent';
 
-import './App.css';
 import axios from 'axios';
-// import { PORT } from '../../.env';
+import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
+import './App.css';
+
+// import { PORT } from '../../.env';
 // const PORT = process.env.PORT;
 
-function App() {
-  const [messages, setMessages] = useState([]);
+const queryClient = new QueryClient();
 
-  const fetchAPI = async () => {
+function App() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Messages />
+    </QueryClientProvider>
+  );
+}
+
+function Messages() {
+  // const [messages, setMessages] = useState([]);
+
+  const fetchMessages = async () => {
     // TODO: make port 3000 a variable from process.env
     try {
       const response = await axios.get('http://localhost:3000/messages');
-      setMessages(response.data.messages);
-      console.log(messages);
+      console.log(response.data.messages);
+      return response.data.messages;
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
 
-  useEffect(() => {
-    fetchAPI();
-  }, []);
+  const {
+    data: messages,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ['messages'],
+    queryFn: fetchMessages,
+  });
+
+  if (isPending) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: {error.message}</span>;
+  }
 
   return (
     <>
@@ -32,17 +58,13 @@ function App() {
       <div className='messagesCtn'>
         <FormComponent />
         <div>
-          {messages.length === 0 ? (
-            <p>loading...</p>
-          ) : (
-            messages.map((message) => (
-              <div key={message.id}>
-                <p>{message.username}</p>
-                <p>{message.message}</p>
-                <p>{message.added}</p>
-              </div>
-            ))
-          )}
+          {messages.map((message) => (
+            <div key={message.id}>
+              <p>{message.username}</p>
+              <p>{message.message}</p>
+              <p>{message.added}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>

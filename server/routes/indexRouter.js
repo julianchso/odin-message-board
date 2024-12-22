@@ -27,13 +27,9 @@ indexRouter.get('/messages', (req, res) => {
 });
 
 indexRouter.post('/messages', (req, res) => {
-  const { message, user, added, id } = req.body;
-  console.log(`request body: ${req.body}`);
+  const { message, username, added, id } = req.body;
 
-  console.log(`message: ${message}`);
-  console.log(`user: ${user}`);
-
-  messages.push({ username: user, message: message, added: added, id: id });
+  messages.unshift({ username: username, message: message, added: added, id: id });
   res.redirect('/');
 });
 

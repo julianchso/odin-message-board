@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useQuery, useMutation } from '@tanstack/react-query';
+
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,6 +10,18 @@ const FormComponent = () => {
     message: '',
     added: new Date(),
     id: uuidv4(),
+  });
+
+  const fetchMessages = async () => {
+    const response = await axios.post('http://localhost:3000/messages', formData);
+    console.log('Form data submitted successfully:', response.data);
+    setFormData({ username: '', message: '', added: new Date(), id: uuidv4() });
+  };
+
+  const { mutation: addMessageMutation } = useMutation({
+    mutationFn: (formData) => {
+      return axios.post('http://localhost:3000/messages', formData);
+    },
   });
 
   const handleChange = (e) => {
@@ -21,11 +35,10 @@ const FormComponent = () => {
     e.preventDefault();
 
     try {
-      // const response = await axios.post('http://localhost:3000/messages', JSON.stringify(formData));
-      const response = await axios.post('http://localhost:3000/messages', formData);
-      // const response = await axios.post('/messages', formData);
+      const response = await addMessageMutation({ username, message, added, id });
       console.log(formData);
       console.log('Form data submitted successfully:', response.data);
+      setFormData({ username: '', message: '', added: new Date(), id: uuidv4() });
     } catch (error) {
       console.log('Error submitting form data', error);
     }
