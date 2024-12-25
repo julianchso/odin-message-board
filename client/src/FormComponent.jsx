@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
 const FormComponent = () => {
+  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     username: '',
     message: '',
@@ -12,32 +13,26 @@ const FormComponent = () => {
     id: uuidv4(),
   });
 
-  const fetchMessages = async () => {
-    const response = await axios.post('http://localhost:3000/messages', formData);
-    console.log('Form data submitted successfully:', response.data);
-    setFormData({ username: '', message: '', added: new Date(), id: uuidv4() });
-  };
-
-  const { mutation: addMessageMutation } = useMutation({
+  const addMessageMutation = useMutation({
     mutationFn: (formData) => {
       return axios.post('http://localhost:3000/messages', formData);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries(['messages']);
     },
   });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    console.log(`username: ${formData.username}`);
-    console.log(`message: ${formData.message}`);
-    // console.log(formData);
   };
 
+  // const handleSubmit = (e) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await addMessageMutation({ username, message, added, id });
-      console.log(formData);
-      console.log('Form data submitted successfully:', response.data);
+      addMessageMutation.mutate(formData);
+      console.log('Form data submitted successfully');
       setFormData({ username: '', message: '', added: new Date(), id: uuidv4() });
     } catch (error) {
       console.log('Error submitting form data', error);

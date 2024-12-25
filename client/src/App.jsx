@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react';
-
 import FormComponent from './FormComponent';
 
 import axios from 'axios';
@@ -21,8 +19,6 @@ function App() {
 }
 
 function Messages() {
-  // const [messages, setMessages] = useState([]);
-
   const fetchMessages = async () => {
     // TODO: make port 3000 a variable from process.env
     try {
