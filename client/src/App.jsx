@@ -50,7 +50,7 @@ function Messages() {
 
   return (
     <>
-      <h1>Mini Messaging App</h1>
+      <h1 className='text-4xl underline'>Mini Messaging App</h1>
       <div className='messagesCtn'>
         <FormComponent />
         <div>

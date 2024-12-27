@@ -4,6 +4,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
+import './FormComponent.css';
+
 const FormComponent = () => {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
