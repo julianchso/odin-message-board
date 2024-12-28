@@ -2,11 +2,11 @@ export const messages = [
   {
     text: 'Hi there!',
     user: 'Amando',
-    added: new Date(),
+    time: new Date(),
   },
   {
     text: 'Hello World!',
     user: 'Charles',
-    added: new Date(),
+    time: new Date(),
   },
 ];

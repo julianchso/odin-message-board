@@ -7,13 +7,13 @@ const messages = [
   {
     username: 'Amando',
     message: 'Hi there!',
-    added: new Date(),
+    time: new Date(),
     id: uuidv4(),
   },
   {
     username: 'Charles',
     message: 'Hello World!',
-    added: new Date(),
+    time: new Date(),
     id: uuidv4(),
   },
 ];
@@ -27,9 +27,9 @@ indexRouter.get('/messages', (req, res) => {
 });
 
 indexRouter.post('/messages', (req, res) => {
-  const { message, username, added, id } = req.body;
+  const { message, username, time, id } = req.body;
 
-  messages.unshift({ username: username, message: message, added: added, id: id });
+  messages.unshift({ username: username, message: message, time: time, id: id });
   res.redirect('/');
 });
 

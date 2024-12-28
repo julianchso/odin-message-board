@@ -3,6 +3,8 @@ import FormComponent from './FormComponent';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
+import formatMessageTime from '../utils/MessageTime';
+
 import './App.css';
 
 // import { PORT } from '../../.env';
@@ -50,19 +52,27 @@ function Messages() {
 
   return (
     <>
-      <h1 className='text-4xl underline'>Mini Messaging App</h1>
-      <div className='messagesCtn'>
-        <FormComponent />
-        <div>
-          {messages.map((message) => (
-            <div key={message.id}>
-              <p>{message.username}</p>
-              <p>{message.message}</p>
-              <p>{message.added}</p>
-            </div>
-          ))}
+      <main className='container mx-6 text-white'>
+        <header className='fixed flex left-0 top-0 h-16 w-full flex items-center justify-center'>
+          <div className='flex w-4/5 justify-center items-center'>
+            <h1 className='text-3xl'>Mini Messaging App</h1>
+          </div>
+        </header>
+        <div className='mt-24'></div>
+        <div className='flex flex-col'>
+          <FormComponent />
+          <div className='m-2'>
+            {messages.map((message) => (
+              <div className='m-2' key={message.id}>
+                <p className='text-base'>{message.username}</p>
+                <p className='text-xs'>{message.time}</p>
+                <p className='text-xs'>{typeof message.time}</p>
+                <p className='text-base mt-4 mb-5'>{message.message}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      </main>
     </>
   );
 }
