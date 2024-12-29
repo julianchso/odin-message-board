@@ -4,14 +4,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
 
-import './FormComponent.css';
-
 const FormComponent = () => {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     username: '',
     message: '',
-    time: new Date(),
+    dateTime: new Date(),
     id: uuidv4(),
   });
 
@@ -34,7 +32,7 @@ const FormComponent = () => {
     try {
       addMessageMutation.mutate(formData);
       console.log('Form data submitted successfully');
-      setFormData({ username: '', message: '', time: new Date(), id: uuidv4() });
+      setFormData({ username: '', message: '', dateTime: new Date(), id: uuidv4() });
     } catch (error) {
       console.log('Error submitting form data', error);
     }

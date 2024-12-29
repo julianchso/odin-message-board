@@ -1,11 +1,28 @@
-import { format, formatDistance, subDays, toDate } from 'date-fns';
+import { useState, useEffect } from 'react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
-export default function formatMessageTime(time) {
-  let newDate = new Date();
-  const dateDistance = formatDistance(
-    subDays(toDate(newDate), Date.parse(time), { addSuffix: true, includeSeconds: true })
-  );
+const FormatMessageTime = (dateTime) => {
+  const date = parseISO(Object.values(dateTime).toString());
 
-  console.log(`added: ${typeof time}`);
-  console.log(`current: ${typeof newDate}`);
-}
+  const [Key, setKey] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setKey((prev) => prev + 1);
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const dateToNow = formatDistanceToNow(date, {
+    addSuffix: true,
+    includeSeconds: true,
+  });
+
+  const dateDistance = `Sent ${dateToNow}`;
+
+  return <>{dateDistance}</>;
+};
+
+export default FormatMessageTime;

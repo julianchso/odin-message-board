@@ -3,7 +3,7 @@ import FormComponent from './FormComponent';
 import axios from 'axios';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
-import formatMessageTime from '../utils/MessageTime';
+import FormatMessageTime from '../utils/MessageTime';
 
 import './App.css';
 
@@ -25,7 +25,6 @@ function Messages() {
     // TODO: make port 3000 a variable from process.env
     try {
       const response = await axios.get('http://localhost:3000/messages');
-      console.log(response.data.messages);
       return response.data.messages;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -65,8 +64,9 @@ function Messages() {
             {messages.map((message) => (
               <div className='m-2' key={message.id}>
                 <p className='text-base'>{message.username}</p>
-                <p className='text-xs'>{message.time}</p>
-                <p className='text-xs'>{typeof message.time}</p>
+                <p className='text-xs opacity-50'>
+                  <FormatMessageTime dateTime={message.dateTime} />
+                </p>
                 <p className='text-base mt-4 mb-5'>{message.message}</p>
               </div>
             ))}
