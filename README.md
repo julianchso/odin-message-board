@@ -18,7 +18,7 @@
 
 ## About The Project
 
-![app](src/media/app.jpg)
+![app](/media/app.jpg)
 
 ### [Live Demo (TBD)](TBD)
 
