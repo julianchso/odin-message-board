@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import axios from 'axios';
@@ -9,9 +9,28 @@ const FormComponent = () => {
   const [formData, setFormData] = useState({
     username: '',
     message: '',
-    dateTime: new Date(),
-    id: uuidv4(),
+    dateTime: '',
+    id: '',
   });
+
+  const [btnClick, setBtnClick] = useState(false);
+
+  const addDateTime = useCallback(async () => {
+    if (btnClick) return;
+    setFormData({ ...formData, dateTime: new Date(), id: uuidv4() });
+    setBtnClick(true);
+  }, [formData, btnClick]);
+
+  // useEffect(() => {
+  //   if (!btnClick.clicked) {
+  //     btnClick.click = true;
+  //     return;
+  //   }
+  //   addDateTime();
+  //   return () => {
+  //     btnClick.clicked = false;
+  //   };
+  // });
 
   const addMessageMutation = useMutation({
     mutationFn: (formData) => {
@@ -26,13 +45,14 @@ const FormComponent = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     try {
       addMessageMutation.mutate(formData);
       console.log('Form data submitted successfully');
-      setFormData({ username: '', message: '', dateTime: new Date(), id: uuidv4() });
+      setFormData({ username: '', message: '', dateTime: '', id: '' });
+      setBtnClick(false);
     } catch (error) {
       console.log('Error submitting form data', error);
     }
@@ -76,6 +96,7 @@ const FormComponent = () => {
         <button
           type='submit'
           className='p-2 m-2 font-semibold rounded-md border-none text-gray-900 bg-white hover:bg-gray-400 duration-150 ease-in-out'
+          onClick={addDateTime}
         >
           Post Message
         </button>
