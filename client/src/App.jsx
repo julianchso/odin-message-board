@@ -42,7 +42,7 @@ function Messages() {
   });
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <span className='text-white'>Loading...</span>;
   }
 
   if (isError) {

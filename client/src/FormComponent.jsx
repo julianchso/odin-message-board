@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import axios from 'axios';
@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const FormComponent = () => {
   const queryClient = useQueryClient();
+  const [btnClick, setBtnClick] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     message: '',
@@ -13,24 +14,11 @@ const FormComponent = () => {
     id: '',
   });
 
-  const [btnClick, setBtnClick] = useState(false);
-
   const addDateTime = useCallback(async () => {
     if (btnClick) return;
     setFormData({ ...formData, dateTime: new Date(), id: uuidv4() });
     setBtnClick(true);
   }, [formData, btnClick]);
-
-  // useEffect(() => {
-  //   if (!btnClick.clicked) {
-  //     btnClick.click = true;
-  //     return;
-  //   }
-  //   addDateTime();
-  //   return () => {
-  //     btnClick.clicked = false;
-  //   };
-  // });
 
   const addMessageMutation = useMutation({
     mutationFn: (formData) => {
