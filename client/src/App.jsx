@@ -7,9 +7,6 @@ import FormatMessageTime from '../utils/MessageTime';
 
 import './App.css';
 
-// import { PORT } from '../../.env';
-// const PORT = process.env.PORT;
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -25,6 +22,11 @@ function Messages() {
     // TODO: make port 3000 a variable from process.env
     try {
       const response = await axios.get('http://localhost:3000/messages');
+      console.log(response);
+      console.log(response.data.messages[0].id);
+      console.log(response.data.messages[0].created_at);
+      console.log(response.data.messages[0].author);
+      console.log(response.data.messages[0].message);
       return response.data.messages;
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -63,9 +65,9 @@ function Messages() {
           <div className='m-2'>
             {messages.map((message) => (
               <div className='m-2' key={message.id}>
-                <p className='text-base'>{message.username}</p>
+                <p className='text-base'>{message.author}</p>
                 <p className='text-xs opacity-50'>
-                  <FormatMessageTime dateTime={message.dateTime} />
+                  <FormatMessageTime dateTime={message.created_at} />
                 </p>
                 <p className='text-base mt-4 mb-5'>{message.message}</p>
               </div>

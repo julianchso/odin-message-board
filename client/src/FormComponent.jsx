@@ -22,10 +22,10 @@ const FormComponent = () => {
 
   const addMessageMutation = useMutation({
     mutationFn: (formData) => {
-      return axios.post('http://localhost:3000/messages', formData);
+      return axios.post('http://localhost:3000/messagesRouter', formData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['messages']);
+      queryClient.invalidateQueries(['messagesRouter']);
     },
   });
 
