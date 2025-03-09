@@ -8,24 +8,27 @@ const FormComponent = () => {
   const queryClient = useQueryClient();
   const [btnClick, setBtnClick] = useState(false);
   const [formData, setFormData] = useState({
-    username: '',
-    message: '',
-    dateTime: '',
     id: '',
+    created_at: '',
+    author: '',
+    message: '',
   });
 
   const addDateTime = useCallback(async () => {
     if (btnClick) return;
-    setFormData({ ...formData, dateTime: new Date(), id: uuidv4() });
+    setFormData({ ...formData, created_at: new Date(), id: uuidv4() });
     setBtnClick(true);
   }, [formData, btnClick]);
 
   const addMessageMutation = useMutation({
     mutationFn: (formData) => {
-      return axios.post('http://localhost:3000/messagesRouter', formData);
+      console.log('mutation');
+      console.log(formData);
+      return axios.post('http://localhost:3000/messages', formData);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries(['messagesRouter']);
+      // queryClient.invalidateQueries(['messagesRouter']);
+      queryClient.invalidateQueries(['indexRouter']);
     },
   });
 
@@ -39,7 +42,7 @@ const FormComponent = () => {
     try {
       addMessageMutation.mutate(formData);
       console.log('Form data submitted successfully');
-      setFormData({ username: '', message: '', dateTime: '', id: '' });
+      setFormData({ id: '', created_at: '', author: '', message: '' });
       setBtnClick(false);
     } catch (error) {
       console.log('Error submitting form data', error);
@@ -50,16 +53,16 @@ const FormComponent = () => {
     <form onSubmit={handleSubmit}>
       <div className='flex-col '>
         <div className='flex flex-row'>
-          <label className='m-2 p-2 ' htmlFor='username'>
-            Username:{' '}
+          <label className='m-2 p-2 ' htmlFor='author'>
+            Author:{' '}
           </label>
           <input
             minLength={2}
             className='m-2 p-2 text-gray-900 rounded'
             type='text'
-            name='username'
+            name='author'
             placeholder='username'
-            value={formData.username}
+            value={formData.author}
             onChange={handleChange}
             required
           />

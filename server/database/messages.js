@@ -19,4 +19,18 @@ async function fetchMessagesDB() {
   }
 }
 
-export default fetchMessagesDB;
+async function postMessagesDB(id, created_at, author, message) {
+  try {
+    console.log('postMessagesDB');
+    const { data, error } = await supabase
+      .from('messageBoard')
+      .insert({ id: id, created_at: created_at, author: author, message: message })
+      .select('*');
+
+    return data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export { fetchMessagesDB, postMessagesDB };

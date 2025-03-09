@@ -23,10 +23,6 @@ function Messages() {
     try {
       const response = await axios.get('http://localhost:3000/messages');
       console.log(response);
-      console.log(response.data.messages[0].id);
-      console.log(response.data.messages[0].created_at);
-      console.log(response.data.messages[0].author);
-      console.log(response.data.messages[0].message);
       return response.data.messages;
     } catch (error) {
       console.error('Error fetching data:', error);
