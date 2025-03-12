@@ -22,7 +22,7 @@ const FormatMessageTime = (dateTime) => {
 
   const dateDistance = `Sent ${dateToNow}`;
 
-  return <>{dateDistance}</>;
+  return dateDistance;
 };
 
 export default FormatMessageTime;

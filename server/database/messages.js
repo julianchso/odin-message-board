@@ -21,13 +21,15 @@ async function fetchMessagesDB() {
 
 async function postMessagesDB(id, created_at, author, message) {
   try {
-    console.log('postMessagesDB');
     const { data, error } = await supabase
       .from('messageBoard')
-      .insert({ id: id, created_at: created_at, author: author, message: message })
-      .select('*');
-
-    return data;
+      .insert({
+        id: id,
+        created_at: created_at,
+        author: author,
+        message: message,
+      })
+      .select();
   } catch (err) {
     console.log(err);
   }

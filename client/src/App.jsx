@@ -1,8 +1,7 @@
-import FormComponent from './FormComponent';
-
 import axios from 'axios';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
+import FormComponent from './FormComponent';
 import FormatMessageTime from '../utils/MessageTime';
 
 import './App.css';
@@ -22,7 +21,6 @@ function Messages() {
     // TODO: make port 3000 a variable from process.env
     try {
       const response = await axios.get('http://localhost:3000/messages');
-      console.log(response);
       return response.data.messages;
     } catch (error) {
       console.error('Error fetching data:', error);
